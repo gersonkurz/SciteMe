@@ -51,6 +51,10 @@ run: build
 # Stage Release payload for the native platform.
 stage: (_stage platform "Release")
 
+# Stage the native payload (with theme files) and launch the staged SciTE.
+run-staged: stage
+    @dist\stage\{{platform}}\SciTE.exe
+
 # Stage Release payload for x64.
 stage-x64: (_stage "x64" "Release")
 
@@ -94,6 +98,8 @@ _stage platform configuration: (_msbuild configuration platform)
     @copy /Y bin\{{platform}}\{{configuration}}\SciTE.exe dist\stage\{{platform}}\SciTE.exe >nul
     @copy /Y bin\{{platform}}\{{configuration}}\Scintilla.dll dist\stage\{{platform}}\Scintilla.dll >nul
     @copy /Y bin\{{platform}}\{{configuration}}\Lexilla.dll dist\stage\{{platform}}\Lexilla.dll >nul
+    @copy /Y theme\theme.lua dist\stage\{{platform}}\theme.lua >nul
+    @copy /Y theme\theme.properties dist\stage\{{platform}}\theme.properties >nul
 
 # Stage optional debug database payload for installer features or release zips.
 [private]
