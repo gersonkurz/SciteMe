@@ -236,8 +236,23 @@ end
 -- ---------------------------------------------------------------------------
 -- hooks + commands
 -- ---------------------------------------------------------------------------
-function OnOpen(path)       applyTheme(current) return false end
-function OnSwitchFile(path) applyTheme(current) return false end
+-- On a fresh file open, SciTE's async completion calls ReadProperties (which
+-- re-applies the light property-file styles) *after* OnOpen, with no trailing
+-- hook -- so styling here alone gets clobbered. We also flag a deferred
+-- re-style that runs on the next OnUpdateUI, which fires after that final
+-- ReadProperties, so our theme wins regardless of open/switch path.
+local needsRestyle = false
+
+function OnOpen(path)       applyTheme(current) needsRestyle = true return false end
+function OnSwitchFile(path) applyTheme(current) needsRestyle = true return false end
+
+function OnUpdateUI()
+  if needsRestyle then
+    needsRestyle = false
+    applyTheme(current)
+  end
+  return false
+end
 
 function cycle_theme()
   local names = sortedNames()
