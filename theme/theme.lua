@@ -62,6 +62,10 @@ local maps = {
 local palettes = {}              -- name -> { base00=.., .. }
 local current = "tokyo-night-dark"
 
+-- Sentinel "theme" meaning: disable our styling and let SciTE's own
+-- property-file styles show through (scite.ReloadProperties()).
+local FACTORY = "(factory defaults)"
+
 -- ---------------------------------------------------------------------------
 -- helpers
 -- ---------------------------------------------------------------------------
@@ -105,11 +109,6 @@ local function sortedNames()
   return t
 end
 
-local function indexOf(list, name)
-  for i, n in ipairs(list) do if n == name then return i end end
-  return 1
-end
-
 -- ---- persistence: remember the active theme in the user profile ----
 local function statePath()
   local home = props["SciteUserHome"]
@@ -123,7 +122,7 @@ local function loadState()
   local f = io.open(path, "r"); if not f then return end
   local name = (f:read("*l") or ""):gsub("%s+$", "")
   f:close()
-  if palettes[name] then current = name end
+  if name == FACTORY or palettes[name] then current = name end
 end
 
 local function saveState()
@@ -169,68 +168,48 @@ local function applyTheme(name)
   end
 end
 
+-- Commit a user choice: apply it live AND persist it. (Persisting here, rather
+-- than behind a separate Apply button, is what lets the picker drop Apply --
+-- every change sticks immediately.)
 local function setTheme(name)
-  if not palettes[name] then return end
-  current = name
-  applyTheme(current)
-  editor:Colourise(0, -1)
-end
-
--- ---------------------------------------------------------------------------
--- picker strip:  !'Theme:' {combo} (Prev) (Next) ((Apply)) (Cancel)
---   element indices include labels, starting at 0.
--- ---------------------------------------------------------------------------
-local CB, BTN_PREV, BTN_NEXT, BTN_APPLY, BTN_CANCEL = 1, 2, 3, 4, 5
-local stripOpen, stripOriginal, stripNames = false, nil, nil
-local suppress = false   -- guard StripSet -> change re-entrancy
-
-local function setCombo(name)
-  suppress = true
-  scite.StripSet(CB, name)
-  suppress = false
-end
-
-local function previewByIndex(i)
-  if i < 1 then i = #stripNames elseif i > #stripNames then i = 1 end
-  current = stripNames[i]
-  setCombo(current)
-  applyTheme(current)
-  editor:Colourise(0, -1)
-end
-
-function show_theme_strip()
-  stripNames = sortedNames()
-  stripOriginal = current
-  scite.StripShow("!'Theme:'{}(&Prev)(&Next)((&Apply))(&Cancel)")
-  scite.StripSetList(CB, table.concat(stripNames, "\n"))
-  setCombo(current)
-  stripOpen = true
-end
-
-local function closeStrip()
-  scite.StripShow("")
-  stripOpen = false
-end
-
-function OnStrip(control, change)
-  if not stripOpen then return false end
-  if change == 1 then          -- clicked
-    if control == BTN_PREV then
-      previewByIndex(indexOf(stripNames, current) - 1)
-    elseif control == BTN_NEXT then
-      previewByIndex(indexOf(stripNames, current) + 1)
-    elseif control == BTN_APPLY then
-      local v = scite.StripValue(CB)   -- honour a dropdown pick too
-      if palettes[v] then current = v else current = stripOriginal end
-      setTheme(current); saveState(); closeStrip()
-    elseif control == BTN_CANCEL then
-      setTheme(stripOriginal); closeStrip()
-    end
-  elseif change == 2 and not suppress then  -- typed into combo
-    local v = scite.StripValue(CB)
-    if palettes[v] then setTheme(v) end
+  if name == FACTORY then
+    current = FACTORY
+    scite.ReloadProperties()   -- restore SciTE's own property-file styling
+    editor:Colourise(0, -1)
+  elseif palettes[name] then
+    current = name
+    applyTheme(current)
+    editor:Colourise(0, -1)
+  else
+    return
   end
-  return true
+  saveState()
+end
+
+-- ---------------------------------------------------------------------------
+-- picker: an autocompletion-style list (UserListShow).
+--   A SciTE user-strip combo does NOT report dropdown selections to Lua
+--   (Strips.cxx ignores CBN_SELCHANGE; only typing fires a change), so a list
+--   is the reliable click-to-apply control. OnUserListSelection fires on click
+--   or Enter; typing filters. The list is led by FACTORY.
+-- ---------------------------------------------------------------------------
+local LIST_TYPE = 17   -- tag to identify our list in OnUserListSelection
+
+function choose_theme()
+  local names = sortedNames()
+  table.insert(names, 1, FACTORY)
+  -- Names sort with "(" before letters, so FACTORY-first matches the presorted
+  -- order autocomplete expects. Use "|" since FACTORY contains a space.
+  editor.AutoCSeparator = string.byte("|")
+  editor:UserListShow(LIST_TYPE, table.concat(names, "|"))
+end
+
+function OnUserListSelection(listType, selection)
+  if listType == LIST_TYPE then
+    setTheme(selection)   -- applies + persists; no-ops on unknown text
+    return true
+  end
+  return false
 end
 
 -- ---------------------------------------------------------------------------
@@ -254,20 +233,12 @@ function OnUpdateUI()
   return false
 end
 
-function cycle_theme()
-  local names = sortedNames()
-  setTheme(names[(indexOf(names, current) % #names) + 1])
-  saveState()
-  print("SciteMe theme: " .. current)
-end
-
-function choose_theme() show_theme_strip() end
-
 -- ---- startup ----
 -- The editor pane is not accessible while the startup script runs, so don't
 -- style here. Flag a re-style instead: the first OnUpdateUI (or OnOpen for a
 -- file passed on the command line) applies the theme once the pane exists.
 loadAllPalettes()
 loadState()
-if not palettes[current] then current = sortedNames()[1] end
+if current ~= FACTORY and not palettes[current] then current = sortedNames()[1] end
+-- In factory mode we never style, so SciTE's own property styling stands as-is.
 needsRestyle = true

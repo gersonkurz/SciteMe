@@ -83,11 +83,18 @@ patching the upstream source dumps.
   `StyleClearAll()` idiom, hooked on `OnOpen`/`OnSwitchFile` (which run after
   SciTE's property styling, so the hook wins). Per-lexer semantic colors are
   hand-authored Lua `maps` tables (style number -> base16 role).
-- **Picker**: a bottom user-strip (`scite.StripShow`) with a combo + Prev/Next
-  buttons giving live preview, plus Apply/Cancel. (Combo-list selection may not
-  fire a `change` event on Windows, so Prev/Next drive preview and Apply reads
-  `StripValue`.)
-- **Persistence**: the active theme name is written to
+- **Picker**: an autocompletion-style list (`editor:UserListShow`), led by a
+  "(factory defaults)" entry. Clicking or Entering an item applies *and persists*
+  it immediately (`setTheme` folds in `saveState`); typing filters. A SciTE
+  user-strip combo was tried first but abandoned: `Strips.cxx`'s
+  `NotificationToStripCommand` ignores `CBN_SELCHANGE`, so dropdown selections
+  are never reported to Lua (only typing fires `change`). `UserListShow`'s
+  `OnUserListSelection` fires reliably on click.
+- **Factory defaults**: selecting "(factory defaults)" calls
+  `scite.ReloadProperties()` to restore SciTE's own property-file styling and
+  sets `current` to a sentinel so the hooks stop re-theming (`applyTheme`
+  no-ops on any non-palette name). Persisted like any other choice.
+- **Persistence**: the active theme name (or the factory sentinel) is written to
   `$(SciteUserHome)/sciteme-theme.txt` and restored at startup.
 - **Chrome (title bar, menus, toolbar, status bar)**: out of scope -- decided
   panes-only to keep zero upstream edits. The Win32 frame stays OS-drawn. (If
@@ -108,8 +115,8 @@ knowledge a generator cannot synthesize anyway.
 - **Done**: `theme/theme.lua` + `theme/theme.properties`, staged via `justfile`
   `_stage` (`just run-staged` stages + launches). Loads all 20 palettes from
   `theme/palettes/`, maps the cpp + python lexers (uniform base for the rest),
-  Tools > Choose Colour Theme... (Ctrl+Shift+Y, strip picker w/ live preview)
-  and Cycle Colour Theme (Ctrl+Shift+T), persists the active theme.
+  Tools > Choose Colour Theme... (Ctrl+Shift+Y, UserListShow list incl. factory
+  defaults; click/Enter applies), persists the active theme.
 - **Next**: extend `maps` to the ~25 commonly used lexers (bash, sql, lua, json,
   css/html, yaml, rust, go, markdown, ...). Optional: follow OS light/dark via
   the existing `CheckAppearanceChanged()` reload; chain a pre-existing user
@@ -119,6 +126,7 @@ knowledge a generator cannot synthesize anyway.
 
 `just run-staged` (stages Release payload incl. theme files + palettes and
 launches the staged `SciTE.exe`). Open a `.cpp` and a `.py`, confirm base16
-styling; Ctrl+Shift+Y opens the picker (Prev/Next previews live), Ctrl+Shift+T
-cycles. Re-launch to confirm the last theme persisted. `just run` (bin\ Debug)
+styling; Ctrl+Shift+Y opens the list (click/Enter applies, incl. factory
+defaults). Re-launch to confirm the last theme persisted.
+`just run` (bin\ Debug)
 omits the staged theme files, so use `run-staged` for verification.
