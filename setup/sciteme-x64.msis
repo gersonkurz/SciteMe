@@ -20,6 +20,10 @@
     <feature name="SciteMe" enabled="yes" allowed="no">
         <files source="..\\dist\\stage\\x64" target="INSTALLDIR"/>
 
+        <feature name="Gerson Preferences" enabled="no" allowed="yes">
+            <files source="gersons-preferences" target="INSTALLDIR"/>
+        </feature>
+
         <feature name="Debug Symbols" enabled="yes" allowed="yes">
             <files source="..\\dist\\symbols\\x64" target="INSTALLDIR"/>
         </feature>
