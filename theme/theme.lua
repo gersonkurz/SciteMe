@@ -264,7 +264,10 @@ end
 function choose_theme() show_theme_strip() end
 
 -- ---- startup ----
+-- The editor pane is not accessible while the startup script runs, so don't
+-- style here. Flag a re-style instead: the first OnUpdateUI (or OnOpen for a
+-- file passed on the command line) applies the theme once the pane exists.
 loadAllPalettes()
 loadState()
 if not palettes[current] then current = sortedNames()[1] end
-applyTheme(current)
+needsRestyle = true
