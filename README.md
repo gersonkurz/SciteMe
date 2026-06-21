@@ -19,14 +19,14 @@ SciteMe is not an official SciTE distribution. It is not a macOS port, and it do
 
 ## Current Status
 
-This repository is in early build-infrastructure mode. The source dumps are present under:
+This repository is in early build-and-package infrastructure mode. The source dumps are present under:
 
 ```text
 scite563/
 wscite563/
 ```
 
-The initial Visual Studio 18 `.slnx` wrapper exists for `x64` and `ARM64` Debug/Release builds. CMake and PowerShell scripts are intentionally out of scope.
+The Visual Studio 18 `.slnx` wrapper exists for `x64` and `ARM64` Debug/Release builds. The `justfile` can build, stage, and invoke MSIS for per-platform MSI packages. CMake and PowerShell scripts are intentionally out of scope.
 
 ## Target Platforms
 
@@ -41,7 +41,7 @@ x86 may be added later if there is enough practical demand.
 
 ## Installer Direction
 
-Installers will be generated with MSIS, which produces WiX-based MSI packages from concise `.msis` manifests. The intended outputs are separate x64 and ARM64 MSI packages, with an optional multi-architecture bundle.
+Installers are generated with MSIS, which produces WiX-based MSI packages from concise `.msis` manifests. The current outputs are standalone x64 and ARM64 MSI packages with a VC++ runtime launch condition; prerequisite bootstrapper and multi-architecture bundles are deferred.
 
 Installer goals include:
 
@@ -60,13 +60,16 @@ SciTE, Scintilla, and Lexilla are upstream projects by Neil Hodgson and contribu
 
 ## Planned Build Experience
 
-The current command-line build workflow is:
+The current command-line workflow is:
 
 ```text
 just build
 just release
 just build-all
+just stage
+just stage-all
 just package
+just package-all
 ```
 
 The intended IDE workflow is opening `SciteMe.slnx` in Visual Studio 18, selecting `x64` or `ARM64`, and building or debugging `SciTE.exe` directly.

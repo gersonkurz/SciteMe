@@ -35,7 +35,6 @@ AGENTS.md
 setup/
   sciteme-x64.msis
   sciteme-arm64.msis
-  sciteme-bundle.msis
   registry/
 bin/
 temp/
@@ -88,7 +87,7 @@ The wrapper projects may point directly into upstream source files. They should 
 
 ## Phase 3: Just-Based Automation
 
-Status: in progress. Build automation exists for native, x64, ARM64, and full-matrix MSBuild invocations. Staging should be added next; package and bundle recipes are deferred until the staged payload and MSIS manifests are defined.
+Status: complete for baseline build, staging, and per-platform MSI automation. Package recipes build standalone MSIs; prerequisite and multi-architecture bundle recipes remain deferred until the x64 and ARM64 packages are proven.
 
 Add a `justfile` modeled after the `environ` pattern.
 
@@ -99,14 +98,17 @@ just build          # Debug, native platform
 just release        # Release, native platform
 just build-all      # Debug/Release for x64 and ARM64
 just stage          # copy release payload into dist/stage/<platform>
+just stage-all      # stage x64 and ARM64 payloads
+just package        # build native-platform MSI
+just package-all    # build x64 and ARM64 MSIs
 just clean
 ```
 
-Use plain command-line tools inside recipes: `msbuild` and `xcopy`/`robocopy` if needed. Add `msis.exe` recipes only after the payload and installer manifests exist. If logic outgrows `just`, add a Python 3.14+ script run through `uv`; do not add PowerShell.
+Use plain command-line tools inside recipes: `msbuild`, `robocopy`, `copy`, and `msis`. If logic outgrows `just`, add a Python 3.14+ script run through `uv`; do not add PowerShell.
 
 ## Phase 4: Payload Staging
 
-Status: next.
+Status: complete for the baseline payload.
 
 Stage the installed application folder from two sources:
 
@@ -119,7 +121,7 @@ Default staged binaries:
 - `Scintilla.dll`
 - `Lexilla.dll`
 
-The `wscite563/wscite` tree is the layout template for properties, documentation, images, and other runtime support files. Do not copy upstream binaries from it into the final payload; overlay the three binaries produced by the current build instead. Add an optional debug-symbol payload, likely as a separate staging or installer feature, that includes matching `.pdb` files.
+The `wscite563/wscite` tree is the layout template for properties, documentation, images, and other runtime support files. Do not copy upstream binaries from it into the final payload; overlay the three binaries produced by the current build instead. Optional debug-symbol staging exists under `dist/symbols/<Platform>/`; wiring it into an installer feature remains deferred.
 
 Candidate output layout:
 
@@ -130,13 +132,13 @@ dist/stage/ARM64/
 
 ## Phase 5: Installer With MSIS
 
-Status: deferred until Phase 4 produces a stable staged payload.
+Status: in progress. Separate x64 and ARM64 MSIS manifests exist and consume the staged payload. They declare the VC++ 2022 runtime as a standalone MSI launch condition. Explorer integration, debug-symbol installer features, prerequisite bootstrappers, and the multi-architecture bundle remain deferred.
 
-Create one `.msis` per platform and one optional bundle manifest:
+Create one `.msis` per platform, then one optional bundle manifest after both platform packages work:
 
 - `setup/sciteme-x64.msis`
 - `setup/sciteme-arm64.msis`
-- `setup/sciteme-bundle.msis`
+- `setup/sciteme-bundle.msis` (deferred)
 
 Installer behavior:
 
@@ -146,9 +148,9 @@ Installer behavior:
 - Avoid taking ownership of common source file extensions by default.
 - Provide clean uninstall.
 
-If the MSVC runtime is required dynamically, use MSIS `<requires type="vcredist" version="2022"/>` and bundle support. If static runtime is chosen, document that choice and keep the payload smaller.
+If the MSVC runtime is required dynamically, use MSIS `<requires type="vcredist" version="2022"/>`. Build standalone MSIs first; add prerequisite bundle support later. If static runtime is chosen, document that choice and keep the payload smaller.
 
-MSIS can consume both individual built files and staged folders. Prefer pointing platform MSIs at the staged payload once Phase 4 is stable. The multi-architecture bundle should remain deferred until the x64 and ARM64 MSI package manifests are working.
+MSIS consumes the staged payload folders produced under `dist/stage/x64/` and `dist/stage/ARM64/`. The multi-architecture bundle should remain deferred until the x64 and ARM64 MSI package manifests are working.
 
 ## Phase 6: Verification
 

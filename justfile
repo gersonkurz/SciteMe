@@ -8,6 +8,7 @@ solution := "SciteMe.slnx"
 # Map native Windows architecture to MSBuild platform.
 _arch := env_var_or_default("PROCESSOR_ARCHITECTURE", "AMD64")
 platform := if _arch == "ARM64" { "ARM64" } else { "x64" }
+platform_suffix := if _arch == "ARM64" { "arm64" } else { "x64" }
 
 # Default: show available recipes.
 default:
@@ -60,10 +61,80 @@ run:
     @just build
     @bin\{{platform}}\Debug\SciTE.exe
 
+# Stage Release payload for the native platform.
+stage:
+    @just _stage {{platform}} Release
+
+# Stage Release payload for x64.
+stage-x64:
+    @just _stage x64 Release
+
+# Stage Release payload for ARM64.
+stage-arm64:
+    @just _stage ARM64 Release
+
+# Stage Release payloads for x64 and ARM64.
+stage-all:
+    @just stage-x64
+    @just stage-arm64
+
+# Stage Release debug databases for the native platform.
+stage-symbols:
+    @just _stage_symbols {{platform}} Release
+
+# Stage Release debug databases for x64.
+stage-symbols-x64:
+    @just _stage_symbols x64 Release
+
+# Stage Release debug databases for ARM64.
+stage-symbols-arm64:
+    @just _stage_symbols ARM64 Release
+
+# Build MSI package for the native platform.
+package:
+    @just package-{{platform_suffix}}
+
+# Build x64 MSI package.
+package-x64:
+    @just stage-x64
+    @just _package sciteme-x64.msis
+
+# Build ARM64 MSI package.
+package-arm64:
+    @just stage-arm64
+    @just _package sciteme-arm64.msis
+
+# Build x64 and ARM64 MSI packages.
+package-all:
+    @just package-x64
+    @just package-arm64
+
+# Generate staged application payload from upstream package data plus local binaries.
+_stage platform configuration:
+    @just _msbuild {{configuration}} {{platform}}
+    @if exist dist\stage\{{platform}} rmdir /s /q dist\stage\{{platform}}
+    @mkdir dist\stage\{{platform}}
+    @robocopy wscite563\wscite dist\stage\{{platform}} /E /XF SciTE.exe Scintilla.dll Lexilla.dll *.pdb *.exp *.lib >nul & if !ERRORLEVEL! GEQ 8 exit /b !ERRORLEVEL!
+    @copy /Y bin\{{platform}}\{{configuration}}\SciTE.exe dist\stage\{{platform}}\SciTE.exe >nul
+    @copy /Y bin\{{platform}}\{{configuration}}\Scintilla.dll dist\stage\{{platform}}\Scintilla.dll >nul
+    @copy /Y bin\{{platform}}\{{configuration}}\Lexilla.dll dist\stage\{{platform}}\Lexilla.dll >nul
+
+# Stage optional debug database payload for installer features or release zips.
+_stage_symbols platform configuration:
+    @just _msbuild {{configuration}} {{platform}}
+    @if exist dist\symbols\{{platform}} rmdir /s /q dist\symbols\{{platform}}
+    @mkdir dist\symbols\{{platform}}
+    @copy /Y bin\{{platform}}\{{configuration}}\*.pdb dist\symbols\{{platform}}\ >nul
+
+# Build one MSIS manifest from setup/.
+_package script:
+    @cd setup&& msis /BUILD /STANDALONE {{script}}
+
 # Clean generated build output.
 clean:
     if exist bin rmdir /s /q bin
     if exist temp rmdir /s /q temp
+    if exist dist rmdir /s /q dist
 
 # Clean, then build Debug for the native platform.
 rebuild:
