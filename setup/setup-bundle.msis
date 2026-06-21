@@ -19,6 +19,10 @@
   <!-- License -->
   <set name="LICENSE_URL" value="https://github.com/gersonkurz/SciteMe/blob/main/LICENSE"/>
 
+  <!-- Offer a "Launch" button on the success page. [InstallFolder] is computed
+       by msis as [ProgramFiles6432Folder]SciteMe; SciTE.exe installs at its root. -->
+  <set name="LAUNCH_TARGET" value="[InstallFolder]\SciTE.exe"/>
+
   <!-- Bundle: combine x64, and ARM64 MSIs -->
   <!-- Note: MSI paths are relative to bootstrap/dist/ where bundle wxs is generated -->
   <bundle>
