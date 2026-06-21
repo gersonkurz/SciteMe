@@ -60,7 +60,7 @@ SciTE, Scintilla, and Lexilla are upstream projects by Neil Hodgson and contribu
 
 ## Planned Build Experience
 
-The intended command-line workflow is:
+The current command-line build workflow is:
 
 ```text
 just build

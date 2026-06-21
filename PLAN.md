@@ -88,6 +88,8 @@ The wrapper projects may point directly into upstream source files. They should 
 
 ## Phase 3: Just-Based Automation
 
+Status: in progress. Build automation exists for native, x64, ARM64, and full-matrix MSBuild invocations. Staging and packaging recipes should be added after payload staging and MSIS manifests are defined.
+
 Add a `justfile` modeled after the `environ` pattern.
 
 Candidate recipes:
