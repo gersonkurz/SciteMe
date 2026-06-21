@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  MSIS Bundle Setup - Combines x64, and ARM64 installers
+  Automatically selects the correct architecture for the target system
+-->
+<setup>
+  <!-- Product identification -->
+  <set name="PRODUCT_NAME" value="SciteMe"/>
+  <set name="PRODUCT_VERSION" value="5.6.3"/>
+  <set name="MANUFACTURER" value="https://github.com/gersonkurz/SciteMe"/>
+  <set name="UPGRADE_CODE" value="{5DBFE6F7-7DAB-4DCC-B2E2-C444CCA74B50}"/>
+
+  <!-- Build configuration -->
+  <set name="BUILD_TARGET" value="setup\SciteMe-{{PRODUCT_VERSION}}.exe"/>
+
+  <!-- Install folder name (under Program Files) -->
+  <set name="INSTALLDIR" value="SciteMe"/>
+
+  <!-- License -->
+  <set name="LICENSE_URL" value="https://github.com/gersonkurz/SciteMe/blob/main/LICENSE"/>
+
+  <!-- Bundle: combine x64, and ARM64 MSIs -->
+  <!-- Note: MSI paths are relative to bootstrap/dist/ where bundle wxs is generated -->
+  <bundle>
+    <msi source_64bit="SciteMe {{PRODUCT_VERSION}} x64.msi"
+         source_arm64="SciteMe {{PRODUCT_VERSION}} ARM64.msi"/>
+  </bundle>
+</setup>

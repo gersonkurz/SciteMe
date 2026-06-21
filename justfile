@@ -1,5 +1,5 @@
 # Build automation for SciteMe.
-# Requires: just, Visual Studio 18 dev environment, msbuild on PATH.
+# Requires: just and a Visual Studio 18 installation with MSBuild.
 
 set windows-shell := ["cmd.exe", "/v:on", "/c"]
 
@@ -14,17 +14,18 @@ platform_suffix := if _arch == "ARM64" { "arm64" } else { "x64" }
 default:
     @just --list
 
-# Run MSBuild with a normalized Path environment for C++ tool tasks.
+# Run MSBuild with an explicit solution and a Visual Studio-discovered MSBuild path.
 _msbuild configuration platform target="Build":
-    @set "KEEP=%PATH%"&& set PATH=&& set "Path=!KEEP!"&& msbuild {{solution}} /t:{{target}} /p:Configuration={{configuration}} /p:Platform={{platform}} /m /nologo /v:minimal
+    @set "MSBUILD="& if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" (for /f "usebackq delims=" %M in (`"%ProgramFiles(x86)%\Microsoft Visual Studio\Installer\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -find MSBuild\Current\Bin\amd64\MSBuild.exe`) do set "MSBUILD=%M")& if not defined MSBUILD set "MSBUILD=msbuild"& "!MSBUILD!" {{solution}} /t:{{target}} /p:Configuration={{configuration}} /p:Platform={{platform}} /m /nologo /v:minimal
 
 # Build Debug for the native platform.
 build:
     @just _msbuild Debug {{platform}}
 
-# Build Release for the native platform.
+# Build both platform MSIs and the bundle executable.
 release:
-    @just _msbuild Release {{platform}}
+    @just package-all
+    @just bundle
 
 # Build Debug for x64.
 build-x64:
@@ -97,17 +98,23 @@ package:
 # Build x64 MSI package.
 package-x64:
     @just stage-x64
+    @just stage-symbols-x64
     @just _package sciteme-x64.msis
 
 # Build ARM64 MSI package.
 package-arm64:
     @just stage-arm64
+    @just stage-symbols-arm64
     @just _package sciteme-arm64.msis
 
 # Build x64 and ARM64 MSI packages.
 package-all:
     @just package-x64
     @just package-arm64
+
+# Build the multi-architecture bundle executable.
+bundle:
+    @msis /BUILD setup\setup-bundle.msis
 
 # Generate staged application payload from upstream package data plus local binaries.
 _stage platform configuration:
