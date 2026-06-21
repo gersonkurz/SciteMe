@@ -8,7 +8,7 @@ SciteMe is an unofficial Windows build and packaging layer for SciTE (a lightwei
 
 ## Build Commands
 
-Requires: `just` command runner, Visual Studio 2022 with MSBuild, and MSIS 3.x at `C:\NGBT\MSIS\msis-3.x` (for packaging only).
+Requires: `just` command runner, Visual Studio 2026 (VS18, `VisualStudioVersion=18.0`) with MSBuild, and MSIS 3.x at `C:\NGBT\MSIS\msis-3.x` (for packaging only). Run build recipes from a VS 2026 Developer Command Prompt / Developer PowerShell.
 
 ```
 just                    # List all recipes
@@ -26,7 +26,7 @@ just release            # package-all + bundle (full release)
 just clean              # Remove bin/, temp/, dist/
 ```
 
-IDE workflow: open `SciteMe.slnx` in Visual Studio 18, select platform (x64/ARM64) and configuration (Debug/Release).
+IDE workflow: open `SciteMe.slnx` in Visual Studio 2026 (VS18), select platform (x64/ARM64) and configuration (Debug/Release).
 
 ## Testing
 
