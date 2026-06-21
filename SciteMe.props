@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SciteMeRoot>$(MSBuildThisFileDirectory)</SciteMeRoot>
+    <UpstreamRoot>$(SciteMeRoot)scite563\</UpstreamRoot>
+    <OutDir>$(SciteMeRoot)bin\$(Platform)\$(Configuration)\</OutDir>
+    <IntDir>$(SciteMeRoot)temp\$(Platform)\$(Configuration)\$(MSBuildProjectName)\</IntDir>
+    <TargetName>$(MSBuildProjectName)</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <WarningLevel>Level4</WarningLevel>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <AdditionalOptions>/source-charset:utf-8 %(AdditionalOptions)</AdditionalOptions>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+</Project>

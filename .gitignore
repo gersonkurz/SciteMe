@@ -40,6 +40,11 @@
 *.app
 
 # Build directories
+bin/
+temp/
+dist/
+.vs/
+*.vcxproj.user
 build/
 Build/
 build-*/
@@ -57,6 +62,11 @@ compile_commands.json
 *.log
 *.bak
 *.swp
+*.wxs
+*.wixpdb
+*.msi
+*.msix
+*.cab
 
 # vcpkg
 vcpkg_installed/

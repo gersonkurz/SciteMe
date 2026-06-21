@@ -48,12 +48,16 @@ wscite563/
 
 ## Phase 1: Repository Baseline
 
+Status: complete.
+
 1. Initialize Git in the final repository folder.
 2. Add `.gitignore` for `bin/`, `temp/`, `dist/`, Visual Studio state, generated MSI/WXS/WIXPDB files, and local tool caches.
 3. Commit the upstream source dump and initial documentation separately from build infrastructure.
 4. Keep `AGENTS.md`, `README.md`, and `PLAN.md` current as decisions change.
 
 ## Phase 2: Visual Studio 18 Build Wrapper
+
+Status: complete for the initial build wrapper. The `.slnx`, wrapper projects, shared props, and Visual Studio filters exist for x64 and ARM64 builds; staging and installer behavior remain later phases.
 
 Create `SciteMe.slnx` with projects for `Lexilla`, `Scintilla`, `SciTE`, and packaging. Use `v145`, Unicode, and Windows desktop targets.
 

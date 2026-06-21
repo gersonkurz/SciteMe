@@ -42,4 +42,4 @@ At minimum, verify x64 and ARM64 Release builds, launch `SciTE.exe`, and inspect
 
 ## Commit & PR Guidance
 
-This workspace may start outside Git, but the intended repository should use concise imperative commits such as `build: add VS18 solution wrapper` or `setup: add arm64 installer manifest`. PRs should describe platform coverage, installer behavior, upstream version, and any files intentionally changed under `scite563/`.
+Use concise imperative commits such as `build: add VS18 solution wrapper` or `setup: add arm64 installer manifest`. Keep commit messages short and specific to the change. Do not include agent advertising, co-author trailers, generated-by text, or similar promotional metadata in commit messages. PRs should describe platform coverage, installer behavior, upstream version, and any files intentionally changed under `scite563/`.

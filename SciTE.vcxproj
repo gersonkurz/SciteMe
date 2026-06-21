@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|ARM64">
+      <Configuration>Debug</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|ARM64">
+      <Configuration>Release</Configuration>
+      <Platform>ARM64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>18.0</VCProjectVersion>
+    <ProjectGuid>{1E7D2140-9200-4F99-A58C-B5C1A7F9AD95}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>SciTE</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Debug'">true</UseDebugLibraries>
+    <UseDebugLibraries Condition="'$(Configuration)'=='Release'">false</UseDebugLibraries>
+    <PlatformToolset>v145</PlatformToolset>
+    <WholeProgramOptimization Condition="'$(Configuration)'=='Release'">true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Import Project="SciteMe.props" />
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <LinkIncremental Condition="'$(Configuration)'=='Debug'">true</LinkIncremental>
+    <LinkIncremental Condition="'$(Configuration)'=='Release'">false</LinkIncremental>
+    <TargetName>SciTE</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_CRT_SECURE_NO_DEPRECATE;_CRT_NONSTDC_NO_DEPRECATE;_SCL_SECURE_NO_WARNINGS;LUA_USER_H="scite_lua_win.h";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(UpstreamRoot)scite\src;$(UpstreamRoot)scite\lua\src;$(UpstreamRoot)lexilla\include;$(UpstreamRoot)lexilla\access;$(UpstreamRoot)scintilla\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <BrowseInformation>false</BrowseInformation>
+      <DisableSpecificWarnings>4702;4324;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>gdi32.lib;comdlg32.lib;comctl32.lib;advapi32.lib;imm32.lib;shell32.lib;ole32.lib;oleaut32.lib;uxtheme.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <CETCompat Condition="'$(Platform)'!='ARM64'">true</CETCompat>
+      <AdditionalManifestDependencies>type='win32' name='Microsoft.Windows.Common-Controls' version='6.0.0.0' processorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'</AdditionalManifestDependencies>
+      <MinimumRequiredVersion Condition="'$(Platform)'=='ARM64'">10.00</MinimumRequiredVersion>
+    </Link>
+    <ResourceCompile>
+      <AdditionalIncludeDirectories>$(UpstreamRoot)scite\src;$(UpstreamRoot)scintilla\win32;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Culture>0x0c09</Culture>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
+    <ClCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <Optimization>Disabled</Optimization>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
+    <ClCompile>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <ResourceCompile>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </ResourceCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="Lexilla.vcxproj">
+      <Project>{48D772A3-1D2B-4E6F-97D1-1500EC61F4BA}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <ProjectReference Include="Scintilla.vcxproj">
+      <Project>{F2A4EAC1-5355-4CF8-8BB3-7212EFBB5930}</Project>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(UpstreamRoot)scite\src\Cookie.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\Credits.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\EditorConfig.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportHTML.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportPDF.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportRTF.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportTEX.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportXML.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\FilePath.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\FileWorker.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\IFaceTable.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\JobQueue.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\LuaExtension.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\MatchMarker.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\MultiplexExtension.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\PathMatch.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\PropSetFile.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\ScintillaWindow.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEBase.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEBuffers.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEIO.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEProps.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\StringHelpers.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\StringList.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\StyleDefinition.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\StyleWriter.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\src\Utf8_16.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\DirectorExtension.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\GUIWin.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\SciTEWin.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\SciTEWinBar.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\SciTEWinDlg.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\Strips.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\win32\UniqueInstance.cxx" />
+    <ClCompile Include="$(UpstreamRoot)lexilla\access\LexillaAccess.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scintilla\call\ScintillaCall.cxx" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lapi.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lauxlib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lbaselib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lbitlib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lcode.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lcorolib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lctype.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldblib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldebug.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldo.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldump.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lfunc.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lgc.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\linit.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\liolib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\llex.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lmathlib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lmem.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\loadlib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lobject.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lopcodes.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\loslib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lparser.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lstate.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lstring.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lstrlib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ltable.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ltablib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ltm.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lundump.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lutf8lib.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lvm.c" />
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lzio.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(UpstreamRoot)scite\src\Cookie.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\EditorConfig.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\Extender.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\FilePath.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\FileWorker.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\GUI.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\IFaceTable.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\JobQueue.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\LuaExtension.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\MatchMarker.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\MultiplexExtension.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\PathMatch.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\PropSetFile.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\ScintillaWindow.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\SciTE.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\scite_lua_win.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\SciTEBase.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\SciTEKeys.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\Searcher.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\StringHelpers.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\StringList.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\StripDefinition.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\StyleDefinition.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\StyleWriter.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\UnicodeConstants.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\Utf8_16.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\src\Worker.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\win32\DirectorExtension.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\win32\DLLFunction.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\win32\SciTEWin.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\win32\Strips.h" />
+    <ClInclude Include="$(UpstreamRoot)scite\win32\UniqueInstance.h" />
+    <ClInclude Include="$(UpstreamRoot)lexilla\include\Lexilla.h" />
+    <ClInclude Include="$(UpstreamRoot)lexilla\include\SciLexer.h" />
+    <ClInclude Include="$(UpstreamRoot)lexilla\access\LexillaAccess.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ILexer.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ILoader.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\Sci_Position.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\Scintilla.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaCall.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaMessages.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaStructures.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaTypes.h" />
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaWidget.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="$(UpstreamRoot)scite\win32\SciTERes.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="$(UpstreamRoot)scite\win32\SciTE.exe.manifest" />
+    <None Include="$(UpstreamRoot)scite\win32\SciBall.ico" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
+</Project>

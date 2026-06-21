@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="lexilla">
+      <UniqueIdentifier>{31661D26-A7C5-4C70-9B7D-4E837852D644}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lexilla\lexers">
+      <UniqueIdentifier>{5FB35933-C214-4459-97B6-0E1FFFA173D6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lexilla\lexlib">
+      <UniqueIdentifier>{8299218B-F471-4DDF-B811-91B8C40D565D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lexilla\src">
+      <UniqueIdentifier>{9018E636-50AE-48EA-A46E-BB46F1229FCE}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexA68k.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAbaqus.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAda.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAPDL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAsciidoc.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAsm.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAsn1.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexASY.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAU3.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAVE.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexAVS.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexBaan.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexBash.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexBasic.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexBatch.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexBibTeX.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexBullant.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCaml.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCIL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCLW.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCmake.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCOBOL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCoffeeScript.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexConf.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCPP.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCrontab.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCsound.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexCSS.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexD.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexDart.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexDataflex.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexDiff.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexDMAP.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexDMIS.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexECL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexEDIFACT.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexEiffel.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexErlang.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexErrorList.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexEScript.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexEscSeq.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexFlagship.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexForth.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexFortran.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexFSharp.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexGAP.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexGDScript.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexGui4Cli.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexHaskell.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexHex.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexHollywood.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexHTML.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexIndent.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexInno.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexJSON.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexJulia.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexKix.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexKVIrc.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexLaTeX.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexLisp.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexLout.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexLua.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMagik.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMake.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMarkdown.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMatlab.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMaxima.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMetapost.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMMIXAL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexModula.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMPT.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMSSQL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexMySQL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexNim.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexNimrod.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexNix.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexNsis.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexNull.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexOpal.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexOScript.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPascal.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPB.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPerl.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPLM.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPO.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPOV.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPowerPro.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPowerShell.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexProgress.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexProps.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPS.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexPython.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexR.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexRaku.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexRebol.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexRegistry.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexRuby.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexRust.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSAS.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexScriptol.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSINEX.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSmalltalk.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSML.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSorcus.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSpecman.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSpice.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSQL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexStata.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexSTTXT.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTACL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTADS3.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTAL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTCL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTCMD.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTeX.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTOML.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTroff.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexTxt2tags.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexVB.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexVerilog.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexVHDL.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexVisualProlog.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexX12.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexYAML.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexers\LexZig.cxx">
+      <Filter>lexilla\lexers</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\Accessor.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\CharacterCategory.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\CharacterSet.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\DefaultLexer.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\InList.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\LexAccessor.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\LexerBase.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\LexerModule.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\LexerSimple.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\PropSetSimple.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\StyleContext.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\lexlib\WordList.cxx">
+      <Filter>lexilla\lexlib</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\src\Lexilla.cxx">
+      <Filter>lexilla\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(UpstreamRoot)lexilla\include\SciLexer.h">
+      <Filter>lexilla</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\Accessor.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\CatalogueModules.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\CharacterCategory.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\CharacterSet.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\DefaultLexer.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\InList.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\LexAccessor.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\LexerBase.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\LexerModule.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\LexerSimple.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\OptionSet.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\PropSetSimple.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\SparseState.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\StringCopy.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\StyleContext.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\SubStyles.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\lexlib\WordList.h">
+      <Filter>lexilla\lexlib</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="$(UpstreamRoot)lexilla\src\LexillaVersion.rc">
+      <Filter>lexilla\src</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,10 @@
+<Solution>
+  <Configurations>
+    <Platform Name="ARM64" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="Lexilla.vcxproj" Id="48d772a3-1d2b-4e6f-97d1-1500ec61f4ba" />
+  <Project Path="Scintilla.vcxproj" Id="f2a4eac1-5355-4cf8-8bb3-7212efbb5930" />
+  <Project Path="SciTE.vcxproj" Id="1e7d2140-9200-4f99-a58c-b5c1a7f9ad95" />
+  <Project Path="Package.vcxproj" Id="0e5df48d-e8ef-4c1c-bd04-d01854afaa0a" />
+</Solution>

@@ -19,14 +19,14 @@ SciteMe is not an official SciTE distribution. It is not a macOS port, and it do
 
 ## Current Status
 
-This repository is in planning/bootstrap mode. The source dumps are present under:
+This repository is in early build-infrastructure mode. The source dumps are present under:
 
 ```text
 scite563/
 wscite563/
 ```
 
-The planned build system will use Visual Studio 18, `.slnx`, MSBuild, and a `justfile`. CMake and PowerShell scripts are intentionally out of scope.
+The initial Visual Studio 18 `.slnx` wrapper exists for `x64` and `ARM64` Debug/Release builds. CMake and PowerShell scripts are intentionally out of scope.
 
 ## Target Platforms
 

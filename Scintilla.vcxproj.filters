@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="scintilla">
+      <UniqueIdentifier>{51459A54-70C6-49E9-A2BB-A70A0C10E9C5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scintilla\include">
+      <UniqueIdentifier>{C158B9B9-C41C-43C0-A778-F9CB1E7B85A6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scintilla\src">
+      <UniqueIdentifier>{9D6EE02F-FF9F-42B8-822A-71DBB284AA4B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scintilla\win32">
+      <UniqueIdentifier>{16D29E09-6FB0-48EF-BB98-8349AB54358B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\AutoComplete.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CallTip.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CaseConvert.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CaseFolder.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CellBuffer.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\ChangeHistory.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CharacterCategoryMap.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CharacterType.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\CharClassify.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\ContractionState.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\DBCS.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Decoration.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Document.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\EditModel.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Editor.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\EditView.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Geometry.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Indicator.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\KeyMap.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\LineMarker.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\MarginView.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\PerLine.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\PositionCache.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\RESearch.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\RunStyles.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\ScintillaBase.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Selection.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\Style.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\UndoHistory.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\UniConversion.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\UniqueString.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\ViewStyle.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\src\XPM.cxx">
+      <Filter>scintilla\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\HanjaDic.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\PlatWin.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\ListBox.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\SurfaceGDI.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\SurfaceD2D.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\ScintillaWin.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\win32\ScintillaDLL.cxx">
+      <Filter>scintilla\win32</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ILexer.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ILoader.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\Sci_Position.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\Scintilla.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaCall.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaMessages.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaStructures.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaTypes.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaWidget.h">
+      <Filter>scintilla\include</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\AutoComplete.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CallTip.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CaseConvert.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CaseFolder.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CellBuffer.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\ChangeHistory.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CharacterCategoryMap.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CharacterType.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\CharClassify.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\ContractionState.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\DBCS.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Debugging.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Decoration.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Document.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\EditModel.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Editor.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\EditView.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\ElapsedPeriod.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Geometry.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Indicator.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\KeyMap.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\LineMarker.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\MarginView.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Partitioning.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\PerLine.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Platform.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Position.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\PositionCache.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\RESearch.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\RunStyles.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\ScintillaBase.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Selection.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\SparseVector.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\SplitVector.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\Style.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\UndoHistory.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\UniConversion.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\UniqueString.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\ViewStyle.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\src\XPM.h">
+      <Filter>scintilla\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\HanjaDic.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\ListBox.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\PlatWin.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\ScintillaWin.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\SurfaceD2D.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\SurfaceGDI.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\win32\WinTypes.h">
+      <Filter>scintilla\win32</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="$(UpstreamRoot)scintilla\win32\ScintRes.rc">
+      <Filter>scintilla\win32</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>

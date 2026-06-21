@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="scite">
+      <UniqueIdentifier>{01876672-4AE8-40F6-A11B-6A4610342A33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scite\src">
+      <UniqueIdentifier>{66833457-43D8-424C-9594-E76949EC0313}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scite\win32">
+      <UniqueIdentifier>{48C5C399-BD7E-4550-8D49-DCB96CC82AAE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scite\lua">
+      <UniqueIdentifier>{2B504D99-E269-4626-A989-A8C5CC7B69E1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lexilla\access">
+      <UniqueIdentifier>{0444D6F3-8ACD-452E-8365-E7CF33378BDA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="scintilla\call">
+      <UniqueIdentifier>{F4A4E57B-80A7-4576-9A51-F8CD75260606}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(UpstreamRoot)scite\src\Cookie.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\Credits.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\EditorConfig.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportHTML.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportPDF.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportRTF.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportTEX.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\ExportXML.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\FilePath.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\FileWorker.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\IFaceTable.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\JobQueue.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\LuaExtension.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\MatchMarker.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\MultiplexExtension.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\PathMatch.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\PropSetFile.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\ScintillaWindow.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEBase.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEBuffers.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEIO.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\SciTEProps.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\StringHelpers.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\StringList.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\StyleDefinition.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\StyleWriter.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\src\Utf8_16.cxx">
+      <Filter>scite\src</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\DirectorExtension.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\GUIWin.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\SciTEWin.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\SciTEWinBar.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\SciTEWinDlg.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\Strips.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\win32\UniqueInstance.cxx">
+      <Filter>scite\win32</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)lexilla\access\LexillaAccess.cxx">
+      <Filter>lexilla\access</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scintilla\call\ScintillaCall.cxx">
+      <Filter>scintilla\call</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lapi.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lauxlib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lbaselib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lbitlib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lcode.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lcorolib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lctype.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldblib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldebug.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldo.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ldump.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lfunc.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lgc.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\linit.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\liolib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\llex.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lmathlib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lmem.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\loadlib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lobject.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lopcodes.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\loslib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lparser.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lstate.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lstring.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lstrlib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ltable.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ltablib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\ltm.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lundump.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lutf8lib.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lvm.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="$(UpstreamRoot)scite\lua\src\lzio.c">
+      <Filter>scite\lua</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(UpstreamRoot)scite\src\Cookie.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\EditorConfig.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\Extender.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\FilePath.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\FileWorker.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\GUI.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\IFaceTable.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\JobQueue.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\LuaExtension.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\MatchMarker.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\MultiplexExtension.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\PathMatch.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\PropSetFile.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\ScintillaWindow.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\SciTE.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\scite_lua_win.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\SciTEBase.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\SciTEKeys.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\Searcher.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\StringHelpers.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\StringList.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\StripDefinition.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\StyleDefinition.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\StyleWriter.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\UnicodeConstants.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\Utf8_16.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\src\Worker.h">
+      <Filter>scite\src</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\win32\DirectorExtension.h">
+      <Filter>scite\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\win32\DLLFunction.h">
+      <Filter>scite\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\win32\SciTEWin.h">
+      <Filter>scite\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\win32\Strips.h">
+      <Filter>scite\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scite\win32\UniqueInstance.h">
+      <Filter>scite\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\include\Lexilla.h">
+      <Filter>lexilla\access</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\include\SciLexer.h">
+      <Filter>lexilla\access</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)lexilla\access\LexillaAccess.h">
+      <Filter>lexilla\access</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ILexer.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ILoader.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\Sci_Position.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\Scintilla.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaCall.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaMessages.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaStructures.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaTypes.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+    <ClInclude Include="$(UpstreamRoot)scintilla\include\ScintillaWidget.h">
+      <Filter>scintilla\call</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="$(UpstreamRoot)scite\win32\SciTERes.rc">
+      <Filter>scite\win32</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Manifest Include="$(UpstreamRoot)scite\win32\SciTE.exe.manifest">
+      <Filter>scite\win32</Filter>
+    </Manifest>
+    <None Include="$(UpstreamRoot)scite\win32\SciBall.ico">
+      <Filter>scite\win32</Filter>
+    </None>
+  </ItemGroup>
+</Project>
