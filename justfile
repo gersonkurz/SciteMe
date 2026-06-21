@@ -1,19 +1,58 @@
 # Build automation for SciteMe.
-# Requires: just, a Visual Studio Developer Command Prompt (msbuild on PATH),
-# and MSIS 3.x (for packaging only).
+#
+# Two workflows -- you either build for THIS machine or cut a full release:
+#
+#   Develop on this machine
+#     just run          Build Debug and launch (fast; runs from bin\, no themes)
+#     just run-staged   Stage the Release payload (incl. themes) and launch it
+#     just build        Build Debug only
+#     just rebuild      Clean, then build Debug
+#
+#   Cut a release (always both architectures)
+#     just release      x64 + ARM64 MSIs and the multi-arch bundle, into setup\
+#
+#   just clean          Remove bin\, temp\, dist\
+#
+# Requires a Visual Studio 2026 Developer shell (msbuild on PATH); `release`
+# also needs MSIS 3.x. Per-architecture sub-steps are intentionally private --
+# building selectively for an architecture you are not on is not a workflow.
 
 set windows-shell := ["cmd.exe", "/c"]
 
 solution := "SciteMe.slnx"
 
-# Map native Windows architecture to MSBuild platform.
+# Native architecture -> MSBuild platform (for the dev workflow).
 _arch := env_var_or_default("PROCESSOR_ARCHITECTURE", "AMD64")
 platform := if _arch == "ARM64" { "ARM64" } else { "x64" }
-platform_suffix := if _arch == "ARM64" { "arm64" } else { "x64" }
 
 # Default: show available recipes.
 default:
     @just --list
+
+# Build Debug for this machine.
+build: (_msbuild "Debug" platform)
+
+# Clean, then build Debug for this machine.
+rebuild: clean build
+
+# Build Debug and launch SciTE (from bin\; no staged themes).
+run: build
+    @bin\{{platform}}\Debug\SciTE.exe
+
+# Stage the Release payload (incl. theme files) and launch the staged SciTE.
+run-staged: (_stage platform "Release")
+    @dist\stage\{{platform}}\SciTE.exe
+
+# Cut a full release: x64 + ARM64 MSIs and the multi-arch bundle, into setup\.
+release: (_package-arch "x64" "x64") (_package-arch "ARM64" "arm64") _bundle
+
+# Clean generated build output.
+clean:
+    if exist bin rmdir /s /q bin
+    if exist temp rmdir /s /q temp
+    if exist dist rmdir /s /q dist
+
+# --- internal machinery (hidden from `just --list`) -------------------------
 
 # Fail early with a clear message when not run from a VS 2026 Developer shell.
 # A Developer Command Prompt / Developer PowerShell sets VisualStudioVersion and
@@ -22,78 +61,18 @@ default:
 _require-devshell:
     @if not "%VisualStudioVersion%"=="18.0" (echo. & echo ERROR: This needs a Visual Studio 2026 Developer shell. & echo Open "Developer Command Prompt for VS 2026" or "Developer PowerShell for VS 2026", then retry. & echo Expected VisualStudioVersion=18.0 but found "%VisualStudioVersion%". & exit /b 1)
 
-# Run MSBuild. Requires msbuild on PATH (use a Developer Command Prompt).
+# Run MSBuild for one configuration/platform.
 [private]
 _msbuild configuration platform target="Build": _require-devshell
     msbuild {{solution}} /t:{{target}} /p:Configuration={{configuration}} /p:Platform={{platform}} /m /nologo /v:minimal
 
-# Build Debug for the native platform.
-build: (_msbuild "Debug" platform)
-
-# Build both platform MSIs and the bundle executable.
-release: package-all bundle
-
-# Build Debug for x64.
-build-x64: (_msbuild "Debug" "x64")
-
-# Build Release for x64.
-release-x64: (_msbuild "Release" "x64")
-
-# Build Debug for ARM64.
-build-arm64: (_msbuild "Debug" "ARM64")
-
-# Build Release for ARM64.
-release-arm64: (_msbuild "Release" "ARM64")
-
-# Build Debug and Release for x64 and ARM64.
-build-all: build-x64 release-x64 build-arm64 release-arm64
-
-# Rebuild Debug and Release for x64 and ARM64.
-rebuild-all: (_msbuild "Debug" "x64" "Rebuild") (_msbuild "Release" "x64" "Rebuild") (_msbuild "Debug" "ARM64" "Rebuild") (_msbuild "Release" "ARM64" "Rebuild")
-
-# Build Debug for the native platform and launch SciTE.
-run: build
-    @bin\{{platform}}\Debug\SciTE.exe
-
-# Stage Release payload for the native platform.
-stage: (_stage platform "Release")
-
-# Stage the native payload (with theme files) and launch the staged SciTE.
-run-staged: stage
-    @dist\stage\{{platform}}\SciTE.exe
-
-# Stage Release payload for x64.
-stage-x64: (_stage "x64" "Release")
-
-# Stage Release payload for ARM64.
-stage-arm64: (_stage "ARM64" "Release")
-
-# Stage Release payloads for x64 and ARM64.
-stage-all: stage-x64 stage-arm64
-
-# Stage Release debug databases for the native platform.
-stage-symbols: (_stage_symbols platform "Release")
-
-# Stage Release debug databases for x64.
-stage-symbols-x64: (_stage_symbols "x64" "Release")
-
-# Stage Release debug databases for ARM64.
-stage-symbols-arm64: (_stage_symbols "ARM64" "Release")
-
-# Build MSI package for the native platform.
-package: (_stage platform "Release") (_stage_symbols platform "Release") (_package "sciteme-" + platform_suffix + ".msis")
-
-# Build x64 MSI package.
-package-x64: stage-x64 stage-symbols-x64 (_package "sciteme-x64.msis")
-
-# Build ARM64 MSI package.
-package-arm64: stage-arm64 stage-symbols-arm64 (_package "sciteme-arm64.msis")
-
-# Build x64 and ARM64 MSI packages.
-package-all: package-x64 package-arm64
+# Build, stage, stage symbols, and package the MSI for one architecture.
+[private]
+_package-arch platform suffix: (_stage platform "Release") (_stage_symbols platform "Release") (_package "sciteme-" + suffix + ".msis")
 
 # Build the multi-architecture bundle executable.
-bundle:
+[private]
+_bundle:
     msis /BUILD setup\setup-bundle.msis
 
 # Generate staged application payload from upstream package data plus local binaries.
@@ -120,12 +99,3 @@ _stage_symbols platform configuration: (_msbuild configuration platform)
 [private]
 _package script:
     @cd setup&& msis /BUILD /STANDALONE {{script}}
-
-# Clean generated build output.
-clean:
-    if exist bin rmdir /s /q bin
-    if exist temp rmdir /s /q temp
-    if exist dist rmdir /s /q dist
-
-# Clean, then build Debug for the native platform.
-rebuild: clean build
