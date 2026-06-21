@@ -1,195 +1,49 @@
-# SciteMe Implementation Plan
+# SciteMe Upgrade Plan
 
-SciteMe will provide modern Windows build and installer infrastructure around the upstream SciTE, Scintilla, and Lexilla source dumps. The core rule is that upstream folders stay as close to pristine source archives as possible; our work lives around them.
+This file tracks the one process that still matters after the initial build and installer infrastructure: moving SciteMe to a newer upstream SciTE, Scintilla, and Lexilla release while keeping the local wrapper layer reviewable.
 
-## Goals
+## Upgrade Rule
 
-- Build SciTE for Windows x64 and Windows ARM64 with Visual Studio 18.
-- Use `.slnx` and MSBuild project files, not CMake.
-- Provide Debug and Release configurations that work from Visual Studio and from the command line.
-- Stage clean install payloads outside the upstream folders.
-- Build MSI installers with MSIS, including Explorer integration.
-- Keep the upstream upgrade path small and reviewable.
+Keep upstream imports and SciteMe infrastructure changes separate. The source dumps under `scite563/` and `wscite563/` are treated as upstream-owned content; avoid local edits there unless there is an explicit, documented patch.
 
-## Non-Goals
+## Upgrade Checklist
 
-- No macOS target, branding, or packaging.
-- No CMake.
-- No PowerShell scripts.
-- No source rewrite of SciTE, Scintilla, or Lexilla.
-- No default x86 commitment until there is a real user need.
+1. Download the matching upstream SciTE/Scintilla/Lexilla source archive and Windows package archive.
+2. Replace the upstream dump contents in a dedicated commit, with no wrapper or installer changes mixed in.
+3. If the folder names change, update references to `scite563/` and `wscite563/` in wrapper-owned files only:
+   - `*.vcxproj`
+   - `*.vcxproj.filters`
+   - `SciteMe.props`
+   - `justfile`
+   - `setup/*.msis`
+   - `README.md` and `AGENTS.md` where relevant
+4. Review upstream file additions/removals and adjust explicit Visual Studio item lists. Do not reintroduce wildcard project items.
+5. Update product/version metadata in the MSIS manifests and bundle manifest.
+6. Rebuild and stage both supported platforms:
 
-## Proposed Repository Layout
-
-```text
-SciteMe.slnx
-SciteMe.props
-Lexilla.vcxproj
-Scintilla.vcxproj
-SciTE.vcxproj
-Package.vcxproj
-justfile
-README.md
-PLAN.md
-AGENTS.md
-setup/
-  sciteme-x64.msis
-  sciteme-arm64.msis
-  registry/
-bin/
-temp/
-dist/
-scite563/
-wscite563/
+```cmd
+just build-x64
+just build-arm64
+just stage-x64
+just stage-arm64
 ```
 
-`scite563/` contains the upstream source dump. `wscite563/` is useful as a reference for the official Windows package contents, but our build should generate its own staged payload.
+7. Build release installers:
 
-## Phase 1: Repository Baseline
-
-Status: complete.
-
-1. Initialize Git in the final repository folder.
-2. Add `.gitignore` for `bin/`, `temp/`, `dist/`, Visual Studio state, generated MSI/WXS/WIXPDB files, and local tool caches.
-3. Commit the upstream source dump and initial documentation separately from build infrastructure.
-4. Keep `AGENTS.md`, `README.md`, and `PLAN.md` current as decisions change.
-
-## Phase 2: Visual Studio 18 Build Wrapper
-
-Status: complete for the initial build wrapper. The `.slnx`, wrapper projects, shared props, and Visual Studio filters exist for x64 and ARM64 builds; staging and installer behavior remain later phases.
-
-Create `SciteMe.slnx` with projects for `Lexilla`, `Scintilla`, `SciTE`, and packaging. Use `v145`, Unicode, and Windows desktop targets.
-
-Initial configurations:
-
-```text
-Debug|x64
-Release|x64
-Debug|ARM64
-Release|ARM64
+```cmd
+just release
 ```
 
-Output conventions:
+8. Install-test the generated x64 and ARM64 packages. Confirm:
+   - `SciTE.exe`, `Scintilla.dll`, and `Lexilla.dll` come from `bin\<Platform>\Release\`;
+   - non-binary runtime files come from `wscite563/wscite`;
+   - optional features still work, including Explorer integration, debug symbols, and `Gerson Preferences`;
+   - uninstall removes installed files and registry entries.
 
-```text
-bin\<Platform>\<Configuration>\
-temp\<Platform>\<Configuration>\<ProjectName>\
-```
+## Local Patches
 
-Project responsibilities:
+If an upstream source change becomes unavoidable, keep it small and document it in the commit message. Prefer wrapper-side fixes in project files, MSIS manifests, staging rules, or documentation.
 
-- `Lexilla.vcxproj`: build `Lexilla.dll` from `scite563/lexilla`.
-- `Scintilla.vcxproj`: build `Scintilla.dll` from `scite563/scintilla`.
-- `SciTE.vcxproj`: build `SciTE.exe` from `scite563/scite` and depend on the two DLL projects.
-- `Package.vcxproj`: utility target for staging and invoking MSIS, if useful from the IDE.
+## Release Notes
 
-The wrapper projects may point directly into upstream source files. They should not emit intermediates into upstream directories.
-
-## Phase 3: Just-Based Automation
-
-Status: complete for baseline build, staging, and per-platform MSI automation. Package recipes build standalone MSIs; prerequisite and multi-architecture bundle recipes remain deferred until the x64 and ARM64 packages are proven.
-
-Add a `justfile` modeled after the `environ` pattern.
-
-Candidate recipes:
-
-```text
-just build          # Debug, native platform
-just release        # Release, native platform
-just build-all      # Debug/Release for x64 and ARM64
-just stage          # copy release payload into dist/stage/<platform>
-just stage-all      # stage x64 and ARM64 payloads
-just package        # build native-platform MSI
-just package-all    # build x64 and ARM64 MSIs
-just clean
-```
-
-Use plain command-line tools inside recipes: `msbuild`, `robocopy`, `copy`, and `msis`. If logic outgrows `just`, add a Python 3.14+ script run through `uv`; do not add PowerShell.
-
-## Phase 4: Payload Staging
-
-Status: complete for the baseline payload.
-
-Stage the installed application folder from two sources:
-
-- built binaries from `bin\<Platform>\Release\`;
-- non-binary payload files and folders from `wscite563/wscite`.
-
-Default staged binaries:
-
-- `SciTE.exe`
-- `Scintilla.dll`
-- `Lexilla.dll`
-
-The `wscite563/wscite` tree is the layout template for properties, documentation, images, and other runtime support files. Do not copy upstream binaries from it into the final payload; overlay the three binaries produced by the current build instead. Optional debug-symbol staging exists under `dist/symbols/<Platform>/`; wiring it into an installer feature remains deferred.
-
-Candidate output layout:
-
-```text
-dist/stage/x64/
-dist/stage/ARM64/
-```
-
-## Phase 5: Installer With MSIS
-
-Status: in progress. Separate x64 and ARM64 MSIS manifests exist and consume the staged payload. They declare the VC++ 2022 runtime as a standalone MSI launch condition. Explorer integration, debug-symbol installer features, prerequisite bootstrappers, and the multi-architecture bundle remain deferred.
-
-Create one `.msis` per platform, then one optional bundle manifest after both platform packages work:
-
-- `setup/sciteme-x64.msis`
-- `setup/sciteme-arm64.msis`
-- `setup/sciteme-bundle.msis` (deferred)
-
-Installer behavior:
-
-- Install to a clear product folder such as `SciteMe` or `SciTE Windows Community Build`.
-- Add a Start menu shortcut.
-- Optionally add Explorer context menu entries such as `Edit with SciTE`.
-- Avoid taking ownership of common source file extensions by default.
-- Provide clean uninstall.
-
-If the MSVC runtime is required dynamically, use MSIS `<requires type="vcredist" version="2022"/>`. Build standalone MSIs first; add prerequisite bundle support later. If static runtime is chosen, document that choice and keep the payload smaller.
-
-MSIS consumes the staged payload folders produced under `dist/stage/x64/` and `dist/stage/ARM64/`. The multi-architecture bundle should remain deferred until the x64 and ARM64 MSI package manifests are working.
-
-## Phase 6: Verification
-
-For each release candidate:
-
-1. Build `Release|x64` and `Release|ARM64`.
-2. Confirm file architecture for each binary.
-3. Launch SciTE from the staged folder.
-4. Run available unit or lexer tests where affected.
-5. Build MSI packages.
-6. Test install and uninstall on clean Windows x64 and Windows ARM64 environments.
-7. Check Explorer integration behavior.
-
-## Phase 7: Signing and Release Provenance
-
-Start unsigned if necessary, but publish SHA256 hashes and build instructions. Keep signing as a documented release enhancement.
-
-Options:
-
-- No signing: cheapest, but SmartScreen warnings are expected.
-- SignPath Foundation: likely best open-source-compatible option if the project qualifies.
-- Microsoft Artifact Signing: managed signing with Azure infrastructure, but likely not free.
-- Commercial OV/EV certificate: conventional, costly, and operationally heavier.
-- Sigstore/cosign: useful for provenance, but not a substitute for Windows Authenticode trust.
-
-## Phase 8: Upstream Upgrade Process
-
-For a new SciTE/Scintilla/Lexilla release:
-
-1. Import the new upstream source dump into `scite563/`.
-2. Do not mix wrapper changes with the source import commit.
-3. Re-run build-all and installer verification.
-4. Update source file lists in wrapper projects only where necessary.
-5. Document any unavoidable local patch under a clear patch section.
-
-## Open Questions
-
-- Final install display name: `SciteMe` vs `SciTE Windows Community Build`.
-- Runtime strategy: dynamic MSVC runtime plus prerequisite bundle vs static runtime.
-- Whether to ship documentation exactly like upstream Windows package or a trimmed payload.
-- Whether Explorer integration is enabled by default or exposed as an optional feature.
-- Whether x86 is intentionally unsupported or postponed.
+For each upgrade, record the upstream version, supported platforms, installer filenames, and SHA-256 hashes. Code signing remains optional and is currently deferred.
