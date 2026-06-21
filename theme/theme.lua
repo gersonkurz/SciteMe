@@ -1,15 +1,16 @@
--- SciteMe base16 theming -- Tier 1 spike (programmatic Scintilla styling)
+-- SciteMe base16 theming (programmatic Scintilla styling via SciTE's Lua)
 --
--- Loaded via ext.lua.startup.script (see theme.properties). It applies a
--- base16 palette to the editor pane through SciTE's Lua interface, using the
--- STYLE_DEFAULT + StyleClearAll idiom proven in ptraced-qt: set one base
--- foreground/background, propagate it to all 256 styles, then re-color the
--- semantic tokens on top. Because OnOpen/OnSwitchFile run *after* SciTE has
--- applied the property-file styles, this hook always wins.
+-- Loaded via ext.lua.startup.script (see theme.properties). Applies a base16
+-- palette to the editor pane using the STYLE_DEFAULT + StyleClearAll idiom:
+-- set one base fg/bg, propagate to all styles, then re-color semantic tokens.
+-- OnOpen/OnSwitchFile run after SciTE's property styling, so this hook wins.
 --
--- This spike embeds three palettes and maps the cpp/python lexers. The Tier 2
--- generator (Python via uv) will emit the full palette set from the repo's
--- theme/palettes/*.yaml plus per-lexer mapping tables for the common languages.
+-- Palettes are read at runtime from palettes/*.yaml (single source of truth;
+-- no generator/build step). A bottom strip provides a picker with live preview,
+-- and the active theme is persisted to the user profile across sessions.
+--
+-- Scope: the two Scintilla panes only. The Win32 chrome (title bar, menus,
+-- toolbar, status bar) is OS-drawn and intentionally left untouched.
 
 -- Scintilla predefined style numbers (Scintilla.h)
 local STYLE_DEFAULT     = 32
@@ -18,52 +19,32 @@ local STYLE_BRACELIGHT  = 34
 local STYLE_BRACEBAD    = 35
 local STYLE_INDENTGUIDE = 37
 
--- ---------------------------------------------------------------------------
--- base16 palettes (verbatim from theme/palettes/*.yaml in this repo)
--- ---------------------------------------------------------------------------
-local palettes = {
-  ["tokyo-night-dark"] = {
-    base00="#1a1b26", base01="#16161e", base02="#2f3549", base03="#444b6a",
-    base04="#787c99", base05="#a9b1d6", base06="#cbccd1", base07="#d5d6db",
-    base08="#c0caf5", base09="#a9b1d6", base0A="#0db9d7", base0B="#9ece6a",
-    base0C="#b4f9f8", base0D="#2ac3de", base0E="#bb9af7", base0F="#f7768e",
-  },
-  ["gruvbox-dark-hard"] = {
-    base00="#1d2021", base01="#3c3836", base02="#504945", base03="#665c54",
-    base04="#bdae93", base05="#d5c4a1", base06="#ebdbb2", base07="#fbf1c7",
-    base08="#fb4934", base09="#fe8019", base0A="#fabd2f", base0B="#b8bb26",
-    base0C="#8ec07c", base0D="#83a598", base0E="#d3869b", base0F="#d65d0e",
-  },
-  ["solarized-light"] = {
-    base00="#fdf6e3", base01="#eee8d5", base02="#93a1a1", base03="#839496",
-    base04="#657b83", base05="#586e75", base06="#073642", base07="#002b36",
-    base08="#dc322f", base09="#cb4b16", base0A="#b58900", base0B="#859900",
-    base0C="#2aa198", base0D="#268bd2", base0E="#6c71c4", base0F="#d33682",
-  },
+-- Palette files shipped under palettes/ (sorted; matches the repo set).
+local themeNames = {
+  "catppuccin-latte", "catppuccin-macchiato", "catppuccin-mocha", "dracula",
+  "everforest-dark-hard", "gruvbox-dark-hard", "gruvbox-light-hard", "monokai",
+  "nord", "one-light", "onedark", "rose-pine", "rose-pine-dawn",
+  "solarized-dark", "solarized-light", "tokyo-night-dark", "tomorrow",
+  "tomorrow-night", "tomorrow-night-blue", "tomorrow-night-eighties",
 }
 
--- Cycle order for the Tools > Cycle Colour Theme command.
-local order = { "tokyo-night-dark", "gruvbox-dark-hard", "solarized-light" }
-local current = "tokyo-night-dark"
+-- Embedded fallback so the editor still themes if palettes/ is unavailable
+-- (e.g. `just run` from bin\ rather than the staged payload).
+local fallback = {
+  base00="#1a1b26", base01="#16161e", base02="#2f3549", base03="#444b6a",
+  base04="#787c99", base05="#a9b1d6", base06="#cbccd1", base07="#d5d6db",
+  base08="#c0caf5", base09="#a9b1d6", base0A="#0db9d7", base0B="#9ece6a",
+  base0C="#b4f9f8", base0D="#2ac3de", base0E="#bb9af7", base0F="#f7768e",
+}
 
--- ---------------------------------------------------------------------------
--- Semantic role -> base16 slot (the standard base16 syntax mapping)
--- ---------------------------------------------------------------------------
+-- Standard base16 syntax mapping: semantic role -> palette slot.
 local roleSlot = {
-  comment   = "base03",
-  string    = "base0B",
-  number    = "base09",
-  keyword   = "base0E",
-  keyword2  = "base0C",
-  operator  = "base05",
-  preproc   = "base0F",
-  type      = "base0A",
-  ["function"] = "base0D",
-  error     = "base08",
+  comment="base03", string="base0B", number="base09", keyword="base0E",
+  keyword2="base0C", operator="base05", preproc="base0F", type="base0A",
+  ["function"]="base0D", error="base08",
 }
 
--- Per-lexer style-number -> role tables.
--- Style numbers are Lexilla's SCE_* values for each lexer (stable across builds).
+-- Per-lexer style-number -> role tables (Lexilla SCE_* values).
 local maps = {
   cpp = {
     [1]="comment", [2]="comment", [3]="comment", [4]="number", [5]="keyword",
@@ -78,6 +59,9 @@ local maps = {
   },
 }
 
+local palettes = {}              -- name -> { base00=.., .. }
+local current = "tokyo-night-dark"
+
 -- ---------------------------------------------------------------------------
 -- helpers
 -- ---------------------------------------------------------------------------
@@ -90,20 +74,75 @@ local function bgr(hex)
   return r + g * 256 + b * 65536
 end
 
+-- Parse a flat base16 YAML (lines like: base0A: "#rrggbb").
+local function loadPalette(name)
+  local dir = props["SciteDefaultHome"]
+  if not dir or dir == "" then return nil end
+  local f = io.open(dir .. "/palettes/" .. name .. ".yaml", "r")
+  if not f then return nil end
+  local p = {}
+  for line in f:lines() do
+    local slot, hex = line:match('(base0[0-9A-Fa-f])%s*:%s*"?(#%x%x%x%x%x%x)"?')
+    if slot then p[slot] = hex end
+  end
+  f:close()
+  if p.base00 and p.base05 then return p end
+  return nil
+end
+
+local function loadAllPalettes()
+  for _, name in ipairs(themeNames) do
+    local p = loadPalette(name)
+    if p then palettes[name] = p end
+  end
+  if not next(palettes) then palettes["tokyo-night-dark"] = fallback end
+end
+
+local function sortedNames()
+  local t = {}
+  for n in pairs(palettes) do t[#t + 1] = n end
+  table.sort(t)
+  return t
+end
+
+local function indexOf(list, name)
+  for i, n in ipairs(list) do if n == name then return i end end
+  return 1
+end
+
+-- ---- persistence: remember the active theme in the user profile ----
+local function statePath()
+  local home = props["SciteUserHome"]
+  if not home or home == "" then home = props["SciteDefaultHome"] end
+  if not home or home == "" then return nil end
+  return home .. "/sciteme-theme.txt"
+end
+
+local function loadState()
+  local path = statePath(); if not path then return end
+  local f = io.open(path, "r"); if not f then return end
+  local name = (f:read("*l") or ""):gsub("%s+$", "")
+  f:close()
+  if palettes[name] then current = name end
+end
+
+local function saveState()
+  local path = statePath(); if not path then return end
+  local f = io.open(path, "w"); if not f then return end
+  f:write(current .. "\n"); f:close()
+end
+
+-- ---------------------------------------------------------------------------
+-- styling
+-- ---------------------------------------------------------------------------
 local function applyTheme(name)
-  local p = palettes[name]
-  if not p then return end
+  local p = palettes[name]; if not p then return end
+  local bg, fg = bgr(p.base00), bgr(p.base05)
 
-  local bg = bgr(p.base00)
-  local fg = bgr(p.base05)
-
-  -- Uniform base everywhere, then propagate. This wipes the light-mode
-  -- hardcoded colours that lexer .properties files would otherwise leave.
   editor.StyleBack[STYLE_DEFAULT] = bg
   editor.StyleFore[STYLE_DEFAULT] = fg
   editor:StyleClearAll()
 
-  -- Editor chrome that lives inside the Scintilla pane.
   editor.CaretFore = fg
   editor.CaretLineBack = bgr(p.base01)
   editor:SetSelBack(true, bgr(p.base02))
@@ -118,7 +157,6 @@ local function applyTheme(name)
   editor.StyleBold[STYLE_BRACELIGHT] = true
   editor.StyleFore[STYLE_BRACEBAD] = bgr(p.base08)
 
-  -- Per-lexer semantic colours (Tier 1: cpp + python; rest stays monochrome).
   local m = maps[editor.LexerLanguage]
   if m then
     for styleNum, role in pairs(m) do
@@ -131,26 +169,87 @@ local function applyTheme(name)
   end
 end
 
--- ---------------------------------------------------------------------------
--- SciTE extension hooks + Tools command
--- ---------------------------------------------------------------------------
-
--- Re-apply after SciTE has set up the lexer for the (new) buffer.
-function OnOpen(path)        applyTheme(current) return false end
-function OnSwitchFile(path)  applyTheme(current) return false end
-
--- Bound to Tools > Cycle Colour Theme (see theme.properties).
-function cycle_theme()
-  for i, name in ipairs(order) do
-    if name == current then
-      current = order[(i % #order) + 1]
-      break
-    end
-  end
+local function setTheme(name)
+  if not palettes[name] then return end
+  current = name
   applyTheme(current)
   editor:Colourise(0, -1)
+end
+
+-- ---------------------------------------------------------------------------
+-- picker strip:  !'Theme:' {combo} (Prev) (Next) ((Apply)) (Cancel)
+--   element indices include labels, starting at 0.
+-- ---------------------------------------------------------------------------
+local CB, BTN_PREV, BTN_NEXT, BTN_APPLY, BTN_CANCEL = 1, 2, 3, 4, 5
+local stripOpen, stripOriginal, stripNames = false, nil, nil
+local suppress = false   -- guard StripSet -> change re-entrancy
+
+local function setCombo(name)
+  suppress = true
+  scite.StripSet(CB, name)
+  suppress = false
+end
+
+local function previewByIndex(i)
+  if i < 1 then i = #stripNames elseif i > #stripNames then i = 1 end
+  current = stripNames[i]
+  setCombo(current)
+  applyTheme(current)
+  editor:Colourise(0, -1)
+end
+
+function show_theme_strip()
+  stripNames = sortedNames()
+  stripOriginal = current
+  scite.StripShow("!'Theme:'{}(&Prev)(&Next)((&Apply))(&Cancel)")
+  scite.StripSetList(CB, table.concat(stripNames, "\n"))
+  setCombo(current)
+  stripOpen = true
+end
+
+local function closeStrip()
+  scite.StripShow("")
+  stripOpen = false
+end
+
+function OnStrip(control, change)
+  if not stripOpen then return false end
+  if change == 1 then          -- clicked
+    if control == BTN_PREV then
+      previewByIndex(indexOf(stripNames, current) - 1)
+    elseif control == BTN_NEXT then
+      previewByIndex(indexOf(stripNames, current) + 1)
+    elseif control == BTN_APPLY then
+      local v = scite.StripValue(CB)   -- honour a dropdown pick too
+      if palettes[v] then current = v else current = stripOriginal end
+      setTheme(current); saveState(); closeStrip()
+    elseif control == BTN_CANCEL then
+      setTheme(stripOriginal); closeStrip()
+    end
+  elseif change == 2 and not suppress then  -- typed into combo
+    local v = scite.StripValue(CB)
+    if palettes[v] then setTheme(v) end
+  end
+  return true
+end
+
+-- ---------------------------------------------------------------------------
+-- hooks + commands
+-- ---------------------------------------------------------------------------
+function OnOpen(path)       applyTheme(current) return false end
+function OnSwitchFile(path) applyTheme(current) return false end
+
+function cycle_theme()
+  local names = sortedNames()
+  setTheme(names[(indexOf(names, current) % #names) + 1])
+  saveState()
   print("SciteMe theme: " .. current)
 end
 
--- Apply once at startup for the initial buffer.
+function choose_theme() show_theme_strip() end
+
+-- ---- startup ----
+loadAllPalettes()
+loadState()
+if not palettes[current] then current = sortedNames()[1] end
 applyTheme(current)

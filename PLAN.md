@@ -73,40 +73,52 @@ patching the upstream source dumps.
   central palette zero times), so a per-lexer style-number -> base16-slot table
   is required regardless of whether colors are delivered as properties or Lua.
 
-## Architecture (hybrid, split by layer)
+## Architecture (all in Lua; no generator, no upstream edits)
 
 - **Palettes**: `theme/palettes/*.yaml` -- the 20 base16 YAML files, copied into
-  this repo (no external dependency on `environ`). Format: `palette.base00..0F`.
-- **Global default/background/UI + live switching**: a Lua applier
-  (`theme/theme.lua`) using the `STYLE_DEFAULT` + `StyleClearAll()` idiom, hooked
-  on `OnOpen`/`OnSwitchFile` (which run after SciTE's property styling, so the
-  hook wins). A Tools command cycles palettes.
-- **Per-lexer token colors**: generated `.properties` (Tier 2), produced by a
-  Python 3.14 / `uv` generator that reads `theme/palettes/*.yaml` and per-lexer
-  mapping tables. (Properties is the native multi-lexer format.)
-- **Chrome (title bar etc.)**: deferred, optional, upstream patch only with
-  explicit sign-off. A single `DwmSetWindowAttribute(DWMWA_USE_IMMERSIVE_DARK_MODE)`
-  call is the cheap high-value piece; dark menus/toolbar are deep diminishing
-  returns.
+  this repo (no external dependency on `environ`). They are the single source of
+  truth and are parsed at runtime by `theme.lua` (flat `base0X: "#hex"`, ~10
+  lines of Lua) -- no build step and no transcription.
+- **Styling + switching**: `theme/theme.lua` uses the `STYLE_DEFAULT` +
+  `StyleClearAll()` idiom, hooked on `OnOpen`/`OnSwitchFile` (which run after
+  SciTE's property styling, so the hook wins). Per-lexer semantic colors are
+  hand-authored Lua `maps` tables (style number -> base16 role).
+- **Picker**: a bottom user-strip (`scite.StripShow`) with a combo + Prev/Next
+  buttons giving live preview, plus Apply/Cancel. (Combo-list selection may not
+  fire a `change` event on Windows, so Prev/Next drive preview and Apply reads
+  `StripValue`.)
+- **Persistence**: the active theme name is written to
+  `$(SciteUserHome)/sciteme-theme.txt` and restored at startup.
+- **Chrome (title bar, menus, toolbar, status bar)**: out of scope -- decided
+  panes-only to keep zero upstream edits. The Win32 frame stays OS-drawn. (If
+  revisited, the cheap high-value piece is a `DwmSetWindowAttribute(
+  DWMWA_USE_IMMERSIVE_DARK_MODE)` patch: link `dwmapi.lib` in the wrapper
+  `SciTE.vcxproj` + ~10 lines in `scite563` `SciTEWin.cxx` -- an upstream edit
+  needing explicit sign-off.)
 
-## Status / tiers
+## Why no Python/uv generator
 
-- **Tier 1 (done, spike)**: `theme/theme.lua` + `theme/theme.properties`, wired
-  into staging (`justfile` `_stage` copies them; `just run-staged` stages and
-  launches). Embeds 3 palettes, maps the cpp + python lexers, uniform base for
-  everything else, Tools > Cycle Colour Theme (Ctrl+Shift+T). Proves the
-  mechanism end to end.
-- **Tier 2 (next)**: Python/`uv` generator -> all 20 palettes + per-lexer tables
-  for the ~25 commonly used languages; Lua menu lists palettes by name; persist
-  the active theme. Optional: follow OS light/dark via the existing
-  `CheckAppearanceChanged()` reload.
-- **Tier 3 (optional)**: remaining lexers, polish, and (only if approved) the
-  title-bar dark-mode patch.
+The generator's only job was emitting `.properties`. Styling is done
+programmatically in Lua instead, so that output is unnecessary: palettes are
+read straight from the YAML at runtime, and per-lexer maps are hand-authored
+knowledge a generator cannot synthesize anyway.
+
+## Status
+
+- **Done**: `theme/theme.lua` + `theme/theme.properties`, staged via `justfile`
+  `_stage` (`just run-staged` stages + launches). Loads all 20 palettes from
+  `theme/palettes/`, maps the cpp + python lexers (uniform base for the rest),
+  Tools > Choose Colour Theme... (Ctrl+Shift+Y, strip picker w/ live preview)
+  and Cycle Colour Theme (Ctrl+Shift+T), persists the active theme.
+- **Next**: extend `maps` to the ~25 commonly used lexers (bash, sql, lua, json,
+  css/html, yaml, rust, go, markdown, ...). Optional: follow OS light/dark via
+  the existing `CheckAppearanceChanged()` reload; chain a pre-existing user
+  startup script rather than overriding `ext.lua.startup.script`.
 
 ## Testing
 
-`just run-staged` (stages Release payload incl. theme files and launches the
-staged `SciTE.exe`). Open a `.cpp` and a `.py` file, confirm dark base16
-styling; press Ctrl+Shift+T to cycle tokyo-night-dark -> gruvbox-dark-hard ->
-solarized-light. `just run` (bin\ Debug) does not include the staged
-`.properties`/theme files, so use `run-staged` for theme verification.
+`just run-staged` (stages Release payload incl. theme files + palettes and
+launches the staged `SciTE.exe`). Open a `.cpp` and a `.py`, confirm base16
+styling; Ctrl+Shift+Y opens the picker (Prev/Next previews live), Ctrl+Shift+T
+cycles. Re-launch to confirm the last theme persisted. `just run` (bin\ Debug)
+omits the staged theme files, so use `run-staged` for verification.

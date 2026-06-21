@@ -100,6 +100,7 @@ _stage platform configuration: (_msbuild configuration platform)
     @copy /Y bin\{{platform}}\{{configuration}}\Lexilla.dll dist\stage\{{platform}}\Lexilla.dll >nul
     @copy /Y theme\theme.lua dist\stage\{{platform}}\theme.lua >nul
     @copy /Y theme\theme.properties dist\stage\{{platform}}\theme.properties >nul
+    @robocopy theme\palettes dist\stage\{{platform}}\palettes /E >nul & if errorlevel 8 exit /b 1
 
 # Stage optional debug database payload for installer features or release zips.
 [private]
