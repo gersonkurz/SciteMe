@@ -88,7 +88,7 @@ The wrapper projects may point directly into upstream source files. They should 
 
 ## Phase 3: Just-Based Automation
 
-Status: in progress. Build automation exists for native, x64, ARM64, and full-matrix MSBuild invocations. Staging and packaging recipes should be added after payload staging and MSIS manifests are defined.
+Status: in progress. Build automation exists for native, x64, ARM64, and full-matrix MSBuild invocations. Staging should be added next; package and bundle recipes are deferred until the staged payload and MSIS manifests are defined.
 
 Add a `justfile` modeled after the `environ` pattern.
 
@@ -99,28 +99,38 @@ just build          # Debug, native platform
 just release        # Release, native platform
 just build-all      # Debug/Release for x64 and ARM64
 just stage          # copy release payload into dist/stage/<platform>
-just package        # build platform MSI with MSIS
-just bundle         # build multi-arch bundle
 just clean
 ```
 
-Use plain command-line tools inside recipes: `msbuild`, `xcopy`/`robocopy` if needed, and `msis.exe`. If logic outgrows `just`, add a Python 3.14+ script run through `uv`; do not add PowerShell.
+Use plain command-line tools inside recipes: `msbuild` and `xcopy`/`robocopy` if needed. Add `msis.exe` recipes only after the payload and installer manifests exist. If logic outgrows `just`, add a Python 3.14+ script run through `uv`; do not add PowerShell.
 
 ## Phase 4: Payload Staging
 
-Define exactly what goes into the installed application folder:
+Status: next.
+
+Stage the installed application folder from two sources:
+
+- built binaries from `bin\<Platform>\Release\`;
+- non-binary payload files and folders from `wscite563/wscite`.
+
+Default staged binaries:
 
 - `SciTE.exe`
 - `Scintilla.dll`
 - `Lexilla.dll`
-- `SciTEGlobal.properties`
-- language `.properties` files
-- documentation and license files worth shipping
-- icons/images needed by SciTE
 
-Use `wscite563/wscite` to validate the file list, not as the authoritative output.
+The `wscite563/wscite` tree is the layout template for properties, documentation, images, and other runtime support files. Do not copy upstream binaries from it into the final payload; overlay the three binaries produced by the current build instead. Add an optional debug-symbol payload, likely as a separate staging or installer feature, that includes matching `.pdb` files.
+
+Candidate output layout:
+
+```text
+dist/stage/x64/
+dist/stage/ARM64/
+```
 
 ## Phase 5: Installer With MSIS
+
+Status: deferred until Phase 4 produces a stable staged payload.
 
 Create one `.msis` per platform and one optional bundle manifest:
 
@@ -137,6 +147,8 @@ Installer behavior:
 - Provide clean uninstall.
 
 If the MSVC runtime is required dynamically, use MSIS `<requires type="vcredist" version="2022"/>` and bundle support. If static runtime is chosen, document that choice and keep the payload smaller.
+
+MSIS can consume both individual built files and staged folders. Prefer pointing platform MSIs at the staged payload once Phase 4 is stable. The multi-architecture bundle should remain deferred until the x64 and ARM64 MSI package manifests are working.
 
 ## Phase 6: Verification
 
